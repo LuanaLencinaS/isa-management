@@ -45,7 +45,7 @@
 }
 .TabsTrigger:focus {
   position: relative;
-  box-shadow: 0 0 0 2px black;
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .TabsContent {
@@ -57,7 +57,7 @@
   outline: none;
 }
 .TabsContent:focus {
-  box-shadow: 0 0 0 2px black;
+  box-shadow: none;
 }
 
 .Text {
@@ -84,7 +84,8 @@
   display: block;
 }
 
-.Input {
+.Input,
+.Textarea {
   flex: 1 0 auto;
   border-radius: 4px;
   padding: 0 10px;
@@ -94,7 +95,8 @@
   box-shadow: 0 0 0 1px var(--violet7);
   height: 35px;
 }
-.Input:focus {
+.Input:focus,
+.Textarea:focus {
   box-shadow: 0 0 0 2px var(--violet8);
 }
 
@@ -118,4 +120,38 @@
 }
 .Button.green:focus {
   box-shadow: 0 0 0 2px var(--green7);
+}
+
+input,
+textarea,
+button {
+  all: unset;
+  box-sizing: border-box;
+}
+
+.FormRoot {
+  width: 260px;
+}
+
+.FormField {
+  display: grid;
+  margin-bottom: 10px;
+}
+
+.FormLabel {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 35px;
+  color: white;
+}
+
+.FormMessage {
+  font-size: 13px;
+  color: white;
+  opacity: 0.8;
+}
+
+.Textarea {
+  resize: none;
+  padding: 10px;
 }

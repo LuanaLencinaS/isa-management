@@ -12,8 +12,17 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-ubuntu);
   height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-avenir);
 }
 
 .page {
@@ -23,6 +32,13 @@ body {
   align-items: center;
   padding: 6rem;
   /* padding: 40px; */
-  max-width: 600px;
+  max-width: 1200px;
   margin: 40px auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .page {
+    padding: 6rem 1rem;
+  }
 }

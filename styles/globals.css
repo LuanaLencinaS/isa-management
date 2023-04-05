@@ -10,6 +10,8 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --font-avenir: Avenir, Helvetica, Arial, sans-serif;
+  --font-ubuntu: "Ubuntu", sans-serif;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -19,6 +21,16 @@
   --primary-color-60: rgb(119, 0, 255, 0.6);
   --primary-color-30: rgb(119, 0, 255, 0.3);
   --primary-color-15: rgb(119, 0, 255, 0.15);
+
+  --positive-color: #afe3c0;
+  --negative-color: #ff5462;
+  --warning-color: #ffd500;
+  --info-color: #919191;
+
+  --positive-color-dark: #18794e;
+  --negative-color-dark: #d64550;
+  --warning-color-dark: #c5a400;
+  --info-color-dark: #67697c;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -56,6 +68,16 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+
+    --primary-color: rgb(119, 0, 255);
+    --primary-color-60: rgb(119, 0, 255, 0.6);
+    --primary-color-30: rgb(119, 0, 255, 0.3);
+    --primary-color-15: rgb(119, 0, 255, 0.15);
+
+    --positive-color: #18794e;
+    --negative-color: #d64550;
+    --warning-color: #c5a400;
+    --info-color: #67697c;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(
@@ -109,6 +131,21 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.upper-headline {
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 800;
+  font-size: 40px;
+}
+
+.title-gradient {
+  background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
