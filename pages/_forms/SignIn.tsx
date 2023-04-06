@@ -1,14 +1,17 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Form from "@radix-ui/react-form";
-import styledSign from "@/styles/Sign.module.css";
+
+interface AsideProps {
+  onGoToClick: (path: string) => void;
+}
 
 interface IFormLogin {
   email: String;
   password: String;
 }
 
-export default function SignIn() {
+export default function SignIn({ onGoToClick }: AsideProps) {
   const {
     register,
     handleSubmit,
@@ -18,6 +21,8 @@ export default function SignIn() {
   const loginUser: SubmitHandler<IFormLogin> = (data) => {
     console.log("DEU  LOGIN");
     console.log("data", data);
+
+    onGoToClick("dashboard");
   };
 
   return (

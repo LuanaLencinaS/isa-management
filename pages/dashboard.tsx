@@ -19,7 +19,7 @@ interface IFormPatient {
   registeNumber: String;
 }
 
-export default function Login() {
+export default function Dashboard() {
   // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
   const [userSelected, setUserSelected] = useState<IFormPatient | null>(null);
 
