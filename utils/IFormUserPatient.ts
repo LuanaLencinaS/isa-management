@@ -7,7 +7,7 @@ export interface IFormUserPatient {
   password: string;
   gender: GenderEnum | string;
   birthdate: string;
-  registeNumber: string;
+  registerNumber: string;
   statusActive: Boolean;
   patientId: string;
 }
