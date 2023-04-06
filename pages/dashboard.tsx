@@ -3,10 +3,13 @@ import Patient from "@/pages/_forms/Patient";
 import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import SearchUser from "@/components/SearchUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GenderEnum } from "@/utils/GenderEnum";
+import { update } from "@/api/service/PatientService";
+import { findAll } from "@/api/service/PatientService";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
+import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 export default function Dashboard() {
   // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
@@ -17,19 +20,49 @@ export default function Dashboard() {
     password: "",
     gender: GenderEnum.female,
     birthdate: "",
-    registeNumber: "",
+    registerNumber: "",
     statusActive: false,
     patientId: "",
   });
+  const [listUsers, setUsers] = useState<IFormUserPatient[]>([]);
+
+  useEffect(() => {
+    //const users: IFormUserPatient[] =
+    getUsers().then((users) => {
+      setUsers(users);
+      console.log(users);
+    });
+  }, []);
+
+  async function getUsers(): Promise<IFormUserPatient[]> {
+    const response = await findAll();
+
+    return response.map((user) => {
+      return UserPatientTransform.fromResponse(user);
+    });
+  }
 
   function openUserDetail(userSelected: IFormUserPatient) {
     console.log("clicou", userSelected);
     setUserSelected(userSelected);
   }
 
-  function onSave(userSelected: IFormUserPatient) {
+  async function onSave(userSelected: IFormUserPatient) {
     console.log("ON SAVE", userSelected);
-    // setUserSelected(userSelected);
+    const userTransform = UserPatientTransform.toRequest(userSelected);
+
+    try {
+      await update(userSelected.userId, userTransform);
+      setUserSelected(userSelected);
+      alert("Paciente atualizado!");
+
+      getUsers().then((users) => {
+        setUsers(users);
+        console.log(users);
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
   }
 
   return (
@@ -40,7 +73,7 @@ export default function Dashboard() {
         <Header />
 
         <div className="ui-dash-content flex-grow flex overflow-x-hidden gap-5">
-          <SearchUser onUserClick={openUserDetail} />
+          <SearchUser onUserClick={openUserDetail} listUsers={listUsers} />
 
           <div className="ui-list-dash flex-grow bg-white  overflow-y-auto">
             {userSelected?.userId ? (

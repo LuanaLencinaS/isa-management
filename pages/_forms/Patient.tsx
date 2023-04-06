@@ -31,7 +31,7 @@ export default function Patient({
     setValue("name", defaultValues.name);
     setValue("birthdate", defaultValues.birthdate);
     setValue("gender", defaultValues.gender);
-    setValue("registeNumber", defaultValues.registeNumber);
+    setValue("registerNumber", defaultValues.registerNumber);
     setValue("email", defaultValues.email);
   }, [defaultValues, setValue]);
 
@@ -102,10 +102,10 @@ export default function Patient({
         </Form.Field>
       </div>
 
-      <Form.Field className="FormField" name="registeNumber">
+      <Form.Field className="FormField" name="registerNumber">
         <Form.Label className="FormLabel">Nº Carteirinha</Form.Label>
 
-        {errors.registeNumber?.type === "required" && (
+        {errors.registerNumber?.type === "required" && (
           <Form.Message className="FormMessage">
             Informe seu nº de carteirinha
           </Form.Message>
@@ -114,10 +114,10 @@ export default function Patient({
           <input
             className="Input"
             type="text"
-            {...register("registeNumber", {
+            {...register("registerNumber", {
               required: true,
             })}
-            onChange={(e) => setValue("registeNumber", e.target.value)}
+            onChange={(e) => setValue("registerNumber", e.target.value)}
           />
         </Form.Control>
       </Form.Field>

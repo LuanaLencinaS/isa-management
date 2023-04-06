@@ -18,7 +18,7 @@ export async function findAll(): Promise<IFormUserPatient[]> {
 }
 
 export async function update(
-  id: number,
+  id: string,
   user: IFormUserPatient
 ): Promise<IFormUserPatient> {
   const response = await put<AxiosResponse<any>>(

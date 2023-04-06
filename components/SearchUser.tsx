@@ -2,7 +2,6 @@ import * as Avatar from "@radix-ui/react-avatar";
 import Plus from "@/components/icons/Plus";
 import Search from "@/components/icons/Search";
 
-import { findAll } from "@/api/service/PatientService";
 import { useEffect, useState } from "react";
 
 import { GenderEnum } from "@/utils/GenderEnum";
@@ -11,6 +10,7 @@ import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 interface AsideProps {
   onUserClick: (userSelected: IFormUserPatient) => void;
+  listUsers: IFormUserPatient[];
 }
 
 const userSelected: IFormUserPatient = {
@@ -22,27 +22,31 @@ const userSelected: IFormUserPatient = {
   patientId: "1",
   gender: GenderEnum.female,
   birthdate: "08/08/2000",
-  registeNumber: "123456",
+  registerNumber: "123456",
 };
 
-export default function SearchUser({ onUserClick }: AsideProps) {
-  const [users, setUsers] = useState<IFormUserPatient[]>([]);
+export default function SearchUser({ onUserClick, listUsers }: AsideProps) {
+  const [users, setUsers] = useState<IFormUserPatient[]>(listUsers);
 
   useEffect(() => {
-    const getUsers = async () => {
-      const response = await findAll();
+    setUsers(listUsers);
+    console.log(users);
+  }, [listUsers, users]);
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const response = await findAll();
 
-      const users: IFormUserPatient[] = response.map((user) => {
-        return UserPatientTransform.fromResponse(user);
-      });
+  //     const users: IFormUserPatient[] = response.map((user) => {
+  //       return UserPatientTransform.fromResponse(user);
+  //     });
 
-      setUsers(users);
+  //     setUsers(users);
 
-      console.log(users);
-    };
+  //     console.log(users);
+  //   };
 
-    getUsers();
-  }, []);
+  //   getUsers();
+  // }, []);
 
   return (
     <section className="ui-search-dash w-1/3 flex-shrink-0 border-r border-gray-200 hidden h-full overflow-y-auto lg:block p-5">
@@ -95,7 +99,7 @@ export default function SearchUser({ onUserClick }: AsideProps) {
                 Nº Carteirinha
               </div>
               <div className="ml-auto text-xs text-gray-500">
-                {user.registeNumber || "-"}
+                {user.registerNumber || "-"}
               </div>
             </div>
             <div className="flex items-center w-full">
