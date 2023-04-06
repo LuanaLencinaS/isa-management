@@ -1,73 +1,40 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Form from "@radix-ui/react-form";
 
-enum GenderEnum {
-  female = "female",
-  male = "male",
-  other = "other",
-}
-
-interface IFormPatient {
-  firstName: String;
-  lastName: String;
-  gender: GenderEnum;
-  birthdate: String;
-  registeNumber: String;
-}
+import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
 export default function Patient() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormPatient>();
+  } = useForm<IFormUserPatient>();
 
-  const setUser: SubmitHandler<IFormPatient> = (data) => {
+  const setUser: SubmitHandler<IFormUserPatient> = (data) => {
     console.log("DEU SUBMIT");
     console.log("data", data);
   };
 
   return (
     <Form.Root className="FormRoot grid grid-cols-1 gap-4">
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-        <Form.Field className="FormField" name="firstName">
-          <Form.Label className="FormLabel">Nome</Form.Label>
+      <Form.Field className="FormField" name="name">
+        <Form.Label className="FormLabel">Nome</Form.Label>
 
-          {errors.firstName?.type === "required" && (
-            <Form.Message className="FormMessage">
-              Primeiro nome é obrigatório
-            </Form.Message>
-          )}
-          <Form.Control asChild>
-            <input
-              className="Input"
-              type="text"
-              {...register("firstName", {
-                required: true,
-              })}
-            />
-          </Form.Control>
-        </Form.Field>
-
-        <Form.Field className="FormField" name="lastName">
-          <Form.Label className="FormLabel">Sobrenome</Form.Label>
-
-          {errors.lastName?.type === "required" && (
-            <Form.Message className="FormMessage">
-              Informe seu sobrenome
-            </Form.Message>
-          )}
-          <Form.Control asChild>
-            <input
-              className="Input"
-              type="text"
-              {...register("lastName", {
-                required: true,
-              })}
-            />
-          </Form.Control>
-        </Form.Field>
-      </div>
+        {errors.name?.type === "required" && (
+          <Form.Message className="FormMessage">
+            Nome é obrigatório
+          </Form.Message>
+        )}
+        <Form.Control asChild>
+          <input
+            className="Input"
+            type="text"
+            {...register("name", {
+              required: true,
+            })}
+          />
+        </Form.Control>
+      </Form.Field>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
         <Form.Field className="FormField" name="birthdate">
@@ -104,9 +71,9 @@ export default function Patient() {
               })}
             >
               <option value="">Selecione</option>
-              <option value="female">Feminino</option>
-              <option value="male">Masculino</option>
-              <option value="other">Outro</option>
+              <option value="F">Feminino</option>
+              <option value="M">Masculino</option>
+              <option value="O">Outro</option>
             </select>
           </Form.Control>
         </Form.Field>

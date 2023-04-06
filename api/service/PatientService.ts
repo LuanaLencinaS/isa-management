@@ -1,38 +1,29 @@
 import { get, put } from "@/api/Request";
+import { AxiosResponse } from "axios";
+import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
-const API_ENDPOINT = process.env.API_ENDPOINT;
+const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-enum GenderEnum {
-  female = "female",
-  male = "male",
-  other = "other",
+export async function findOne(id: number): Promise<IFormUserPatient> {
+  const response = await get<AxiosResponse<any>>(
+    `${API_ENDPOINT}/patient/${id}`
+  );
+  return response.data.data as IFormUserPatient;
 }
 
-interface IFormPatient {
-  firstName: String;
-  lastName: String;
-  gender: GenderEnum;
-  birthdate: String;
-  registeNumber: String;
-}
-
-export async function findOne(id: number): Promise<IFormPatient> {
-  const response = await get<IFormPatient>(`${API_ENDPOINT}/patient/${id}`);
-  return response.data;
-}
-
-export async function findAll(): Promise<IFormPatient[]> {
-  const response = await get<IFormPatient[]>(`${API_ENDPOINT}/patient`);
-  return response.data;
+export async function findAll(): Promise<IFormUserPatient[]> {
+  console.log(API_ENDPOINT);
+  const response = await get<AxiosResponse<any>>(`${API_ENDPOINT}/patient`);
+  return response.data.data as IFormUserPatient[];
 }
 
 export async function update(
   id: number,
-  user: IFormPatient
-): Promise<IFormPatient> {
-  const response = await put<IFormPatient>(
+  user: IFormUserPatient
+): Promise<IFormUserPatient> {
+  const response = await put<AxiosResponse<any>>(
     `${API_ENDPOINT}/patient/${id}`,
     user
   );
-  return response.data;
+  return response.data.data as IFormUserPatient;
 }

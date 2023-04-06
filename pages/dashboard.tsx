@@ -5,25 +5,16 @@ import Aside from "@/components/Aside";
 import SearchUser from "@/components/SearchUser";
 import { useState } from "react";
 
-enum GenderEnum {
-  female = "female",
-  male = "male",
-  other = "other",
-}
-
-interface IFormPatient {
-  firstName: String;
-  lastName: String;
-  gender: GenderEnum;
-  birthdate: String;
-  registeNumber: String;
-}
+import { GenderEnum } from "@/utils/GenderEnum";
+import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
 export default function Dashboard() {
   // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
-  const [userSelected, setUserSelected] = useState<IFormPatient | null>(null);
+  const [userSelected, setUserSelected] = useState<IFormUserPatient | null>(
+    null
+  );
 
-  function openUserDetail(userSelected: IFormPatient) {
+  function openUserDetail(userSelected: IFormUserPatient) {
     console.log(userSelected);
     setUserSelected(userSelected);
   }
@@ -48,11 +39,7 @@ export default function Dashboard() {
                       src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
                     />
                   </Avatar.Root>
-                  {userSelected && (
-                    <p>
-                      {userSelected.firstName} {userSelected.lastName}
-                    </p>
-                  )}
+                  {userSelected && <p>{userSelected.name}</p>}
                 </div>
                 <div className="ml-auto sm:flex hidden items-center justify-end">
                   <div className="text-right">
