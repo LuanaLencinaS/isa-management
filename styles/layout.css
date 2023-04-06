@@ -69,6 +69,21 @@ h6 {
   z-index: 1;
 }
 
+/* Estiliza a barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Estiliza o controle deslizante */
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color-30);
+}
+
+/* Estiliza a trilha */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
 /* RESPONSIVE */
 @media (max-width: 700px) {
   .page {
@@ -76,6 +91,14 @@ h6 {
   }
   .card {
     width: 90%;
+  }
+}
+
+/* Esconde a barra de rolagem do Internet Explorer */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* Estiliza a barra de rolagem */
+  ::-webkit-scrollbar {
+    width: 0px;
   }
 }
 
