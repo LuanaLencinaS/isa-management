@@ -8,6 +8,6 @@ export interface IFormUserPatient {
   gender: GenderEnum | string;
   birthdate: string;
   registerNumber: string;
-  statusActive: Boolean;
+  statusActive: boolean;
   patientId: string;
 }

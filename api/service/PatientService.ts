@@ -12,7 +12,6 @@ export async function findOne(id: number): Promise<IFormUserPatient> {
 }
 
 export async function findAll(): Promise<IFormUserPatient[]> {
-  console.log(API_ENDPOINT);
   const response = await get<AxiosResponse<any>>(`${API_ENDPOINT}/patient`);
   return response.data.data as IFormUserPatient[];
 }
@@ -26,4 +25,20 @@ export async function update(
     user
   );
   return response.data.data as IFormUserPatient;
+}
+
+export async function deleteUser(id: string): Promise<any> {
+  const response = await put<AxiosResponse<any>>(
+    `${API_ENDPOINT}/patient/${id}/delete`,
+    {}
+  );
+  return response.data.data as any;
+}
+
+export async function retoreUser(id: string): Promise<any> {
+  const response = await put<AxiosResponse<any>>(
+    `${API_ENDPOINT}/patient/${id}/restore`,
+    {}
+  );
+  return response.data.data as any;
 }

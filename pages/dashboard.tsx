@@ -6,14 +6,14 @@ import SearchUser from "@/components/SearchUser";
 import { useEffect, useState } from "react";
 
 import { GenderEnum } from "@/utils/GenderEnum";
-import { update } from "@/api/service/PatientService";
+import { update, deleteUser, retoreUser } from "@/api/service/PatientService";
 import { findAll } from "@/api/service/PatientService";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
 import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 export default function Dashboard() {
   // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
-  const [userSelected, setUserSelected] = useState<IFormUserPatient | null>({
+  const [userSelected, setUserSelected] = useState<IFormUserPatient>({
     userId: "",
     name: "",
     email: "",
@@ -27,11 +27,7 @@ export default function Dashboard() {
   const [listUsers, setUsers] = useState<IFormUserPatient[]>([]);
 
   useEffect(() => {
-    //const users: IFormUserPatient[] =
-    getUsers().then((users) => {
-      setUsers(users);
-      console.log(users);
-    });
+    getUsers().then((users) => setUsers(users));
   }, []);
 
   async function getUsers(): Promise<IFormUserPatient[]> {
@@ -43,12 +39,10 @@ export default function Dashboard() {
   }
 
   function openUserDetail(userSelected: IFormUserPatient) {
-    console.log("clicou", userSelected);
     setUserSelected(userSelected);
   }
 
   async function onSave(userSelected: IFormUserPatient) {
-    console.log("ON SAVE", userSelected);
     const userTransform = UserPatientTransform.toRequest(userSelected);
 
     try {
@@ -56,10 +50,37 @@ export default function Dashboard() {
       setUserSelected(userSelected);
       alert("Paciente atualizado!");
 
-      getUsers().then((users) => {
-        setUsers(users);
-        console.log(users);
-      });
+      getUsers().then((users) => setUsers(users));
+    } catch (error: any) {
+      alert(error.message);
+    }
+  }
+
+  function handleStateUser(isActive: boolean, userSelectedId: string) {
+    isActive ? onDeleteUser(userSelectedId) : onRestoreUser(userSelectedId);
+  }
+
+  async function onRestoreUser(userSelectedId: string) {
+    try {
+      const userUpdated = await retoreUser(userSelectedId);
+      setUserSelected({ ...userSelected, statusActive: true });
+
+      alert("Paciente reativado com sucesso!");
+
+      getUsers().then((users) => setUsers(users));
+    } catch (error: any) {
+      alert(error.message);
+    }
+  }
+
+  async function onDeleteUser(userSelectedId: string) {
+    try {
+      const userUpdated = await deleteUser(userSelectedId);
+      setUserSelected({ ...userSelected, statusActive: false });
+
+      alert("Paciente desativado com sucesso!");
+
+      getUsers().then((users) => setUsers(users));
     } catch (error: any) {
       alert(error.message);
     }
@@ -92,11 +113,27 @@ export default function Dashboard() {
                     <div className="ml-auto sm:flex hidden items-center justify-end">
                       <div className="text-right">
                         {userSelected?.statusActive ? (
-                          <button className="Button negative rounded-[20px] py-2 px-4">
+                          <button
+                            className="Button negative rounded-[20px] py-2 px-4"
+                            onClick={() =>
+                              handleStateUser(
+                                userSelected?.statusActive,
+                                userSelected?.userId
+                              )
+                            }
+                          >
                             Desativar
                           </button>
                         ) : (
-                          <button className="Button positive rounded-[20px] py-2 px-4">
+                          <button
+                            className="Button positive rounded-[20px] py-2 px-4"
+                            onClick={() =>
+                              handleStateUser(
+                                userSelected?.statusActive,
+                                userSelected?.userId
+                              )
+                            }
+                          >
                             Reativar
                           </button>
                         )}

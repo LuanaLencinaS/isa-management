@@ -37,7 +37,6 @@ export default function Registro() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormRegister>();
-  console.log("register", register);
 
   const createUser: SubmitHandler<IFormRegister> = (data) => {
     console.log("DEU SUBMIT");

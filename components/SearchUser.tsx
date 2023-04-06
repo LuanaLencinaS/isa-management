@@ -30,23 +30,7 @@ export default function SearchUser({ onUserClick, listUsers }: AsideProps) {
 
   useEffect(() => {
     setUsers(listUsers);
-    console.log(users);
   }, [listUsers, users]);
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     const response = await findAll();
-
-  //     const users: IFormUserPatient[] = response.map((user) => {
-  //       return UserPatientTransform.fromResponse(user);
-  //     });
-
-  //     setUsers(users);
-
-  //     console.log(users);
-  //   };
-
-  //   getUsers();
-  // }, []);
 
   return (
     <section className="ui-search-dash w-1/3 flex-shrink-0 border-r border-gray-200 hidden h-full overflow-y-auto lg:block p-5">
