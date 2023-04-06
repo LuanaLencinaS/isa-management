@@ -2,6 +2,9 @@ import * as Avatar from "@radix-ui/react-avatar";
 import Plus from "@/components/icons/Plus";
 import Search from "@/components/icons/Search";
 
+import { findAll } from "@/api/service/PatientService";
+import { useEffect, useState } from "react";
+
 enum GenderEnum {
   female = "female",
   male = "male",
@@ -29,6 +32,17 @@ const userSelected: IFormPatient = {
 };
 
 export default function SearchUser({ onUserClick }: AsideProps) {
+  const [users, setUsers] = useState<IFormPatient[]>([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const users = await findAll();
+      setUsers(users);
+    };
+
+    getUsers();
+  }, []);
+
   return (
     <section className="ui-search-dash xl:w-72 w-48 flex-shrink-0 border-r border-gray-200  h-full overflow-y-auto lg:block hidden p-5">
       <header className="bg-white space-y-4 p-4">
@@ -78,6 +92,15 @@ export default function SearchUser({ onUserClick }: AsideProps) {
             <div className="ml-auto text-xs text-gray-500">123456789</div>
           </div>
         </button>
+      </ul>
+
+      <ul>
+        {users.map((user) => (
+          <li key={`post-${user.firstName}`}>
+            <h2>{user.lastName}</h2>
+            <p>{user.gender}</p>
+          </li>
+        ))}
       </ul>
     </section>
   );
