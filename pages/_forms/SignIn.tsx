@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Form from "@radix-ui/react-form";
+import { login } from "@/api/service/LoginService";
 
 interface AsideProps {
   onGoToClick: (path: string) => void;
@@ -18,10 +19,11 @@ export default function SignIn({ onGoToClick }: AsideProps) {
     formState: { errors },
   } = useForm<IFormLogin>();
 
-  const loginUser: SubmitHandler<IFormLogin> = (data) => {
-    console.log("DEU  LOGIN");
-    console.log("data", data);
+  const loginUser: SubmitHandler<IFormLogin> = async (data) => {
+    const response = await login(data.email, data.password);
 
+    if (response.status == 0) return alert("Login invalido");
+    localStorage.setItem("token_authorizarion", response.data.token);
     onGoToClick("dashboard");
   };
 
