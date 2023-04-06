@@ -34,17 +34,17 @@ const userSelected: IFormPatient = {
 export default function SearchUser({ onUserClick }: AsideProps) {
   const [users, setUsers] = useState<IFormPatient[]>([]);
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const users = await findAll();
-      setUsers(users);
-    };
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const users = await findAll();
+  //     setUsers(users);
+  //   };
 
-    getUsers();
-  }, []);
+  //   getUsers();
+  // }, []);
 
   return (
-    <section className="ui-search-dash xl:w-72 w-48 flex-shrink-0 border-r border-gray-200  h-full overflow-y-auto lg:block hidden p-5">
+    <section className="ui-search-dash xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 hidden h-full overflow-y-auto lg:block p-5">
       <header className="bg-white space-y-4 p-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-primary-color">Pacientes</h2>
@@ -94,14 +94,14 @@ export default function SearchUser({ onUserClick }: AsideProps) {
         </button>
       </ul>
 
-      <ul>
+      {/* <ul>
         {users.map((user) => (
           <li key={`post-${user.firstName}`}>
             <h2>{user.lastName}</h2>
             <p>{user.gender}</p>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </section>
   );
 }

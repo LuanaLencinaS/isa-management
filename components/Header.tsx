@@ -2,7 +2,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 
 export default function Header() {
   return (
-    <section className="ui-header-dash lg:flex w-full border-b border-gray-200  hidden px-10 py-4">
+    <section className="ui-header-dash lg:flex w-full border-b border-gray-200 hidden px-10 py-4">
       <div className="ml-auto flex items-center space-x-7">
         <button className="flex items-center">
           <span className="relative flex-shrink-0">
