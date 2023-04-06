@@ -4,7 +4,7 @@ import * as Form from "@radix-ui/react-form";
 import styledSign from "@/styles/Sign.module.css";
 
 interface IFormLogin {
-  username: String;
+  email: String;
   password: String;
 }
 
@@ -26,105 +26,52 @@ export default function SignIn() {
         Faça login e comece a gerenciar seus pacientes, planos e colaboradores!
       </p>
 
-      <Form.Root className="FormRoot">
-        <Form.Field className="FormField" name="username">
-          <div>
-            <Form.Label className="FormLabel">Login</Form.Label>
+      <Form.Root className="FormRoot grid grid-cols-1 gap-4">
+        <Form.Field className="FormField" name="email">
+          <Form.Label className="FormLabel">E-mail</Form.Label>
 
-            {errors.username?.type === "required" && (
-              <Form.Message className="FormMessage" match="valueMissing">
-                Login é obrigatório
-              </Form.Message>
-            )}
-          </div>
+          {errors.email?.type === "required" && (
+            <Form.Message className="FormMessage">
+              Informe o e-mail
+            </Form.Message>
+          )}
           <Form.Control asChild>
             <input
               className="Input"
               type="email"
-              required
-              {...register("username", {
+              {...register("email", {
                 required: true,
-                maxLength: 20,
-                pattern: /^[A-Za-z]+$/i,
               })}
-              aria-invalid={errors.username ? "true" : "false"}
+            />
+          </Form.Control>
+        </Form.Field>
+
+        <Form.Field className="FormField" name="password">
+          <Form.Label className="FormLabel">Senha</Form.Label>
+
+          {errors.password?.type === "required" && (
+            <Form.Message className="FormMessage">Insira a senha</Form.Message>
+          )}
+          <Form.Control asChild>
+            <input
+              className="Input"
+              type="password"
+              {...register("password", {
+                required: true,
+              })}
             />
           </Form.Control>
         </Form.Field>
 
         <Form.Submit asChild>
           <button
-            className="Button green"
-            style={{
-              display: "flex",
-              marginTop: 20,
-              justifyContent: "flex-end",
-            }}
+            className="Button w-full rounded-[50px]"
             onClick={handleSubmit(loginUser)}
           >
             Entrar
           </button>
         </Form.Submit>
       </Form.Root>
-
-      {/* <form>
-        <fieldset className="Fieldset">
-          <label className="Label" htmlFor="username">
-            Login
-          </label>
-          <input
-            className="Input"
-            id="username"
-            type="text"
-            {...register("username", {
-              required: true,
-              maxLength: 20,
-              pattern: /^[A-Za-z]+$/i,
-            })}
-            aria-invalid={errors.username ? "true" : "false"}
-          />
-          {errors.username?.type === "required" && (
-            <p role="alert">Login é obrigatório</p>
-          )}
-        </fieldset>
-
-        <fieldset className="Fieldset">
-          <label className="Label" htmlFor="password">
-            Senha
-          </label>
-          <input
-            className="Input"
-            id="password"
-            type="password"
-            {...register("password", {
-              required: true,
-            })}
-            aria-invalid={errors.password ? "true" : "false"}
-          />
-          {errors.password?.type === "required" && (
-            <p role="alert">Insira sua senha</p>
-          )}
-        </fieldset>
-        <div
-          style={{
-            display: "flex",
-            marginTop: 20,
-            justifyContent: "flex-end",
-          }}
-        >
-          <button
-            className="Button green"
-            style={{
-              display: "flex",
-              marginTop: 20,
-              justifyContent: "flex-end",
-            }}
-            onClick={handleSubmit(loginUser)}
-          >
-            Entrar
-          </button>
-        </div>
-      </form> */}
     </Tabs.Content>
   );
 }

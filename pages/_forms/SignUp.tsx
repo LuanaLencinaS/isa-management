@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Tabs from "@radix-ui/react-tabs";
+import * as Form from "@radix-ui/react-form";
 
 enum GenderEnum {
   female = "female",
@@ -32,109 +33,119 @@ export default function SignUp() {
     <Tabs.Content className="TabsContent" value="sign-up">
       <p className="Text">Registre-se como um Gestor na plataforma.</p>
 
-      <form>
-        {/* <form createUser={handleSubmit(createUser)}> */}
+      <Form.Root className="FormRoot grid grid-cols-1 gap-4">
         <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="firstName">
-              Primeiro nome
-            </label>
-            <input
-              className="Input"
-              id="firstName"
-              type="text"
-              {...register("firstName", {
-                required: true,
-                maxLength: 20,
-                pattern: /^[A-Za-z]+$/i,
-              })}
-              aria-invalid={errors.firstName ? "true" : "false"}
-            />
+          <Form.Field className="FormField" name="firstName">
+            <Form.Label className="FormLabel">Nome</Form.Label>
+
             {errors.firstName?.type === "required" && (
-              <p role="alert">Informe o primeiro nome</p>
+              <Form.Message className="FormMessage">
+                Informe o primeiro nome
+              </Form.Message>
             )}
-          </fieldset>
-          <fieldset className="Fieldset">
-            <label className="Label" htmlFor="lastName">
-              Sobrenome
-            </label>
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                {...register("firstName", {
+                  required: true,
+                })}
+              />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Field className="FormField" name="lastName">
+            <Form.Label className="FormLabel">Sobrenome</Form.Label>
+
+            {errors.lastName?.type === "required" && (
+              <Form.Message className="FormMessage">
+                Informe seu sobrenome
+              </Form.Message>
+            )}
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="text"
+                {...register("lastName", {
+                  required: true,
+                })}
+              />
+            </Form.Control>
+          </Form.Field>
+        </div>
+
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+          <Form.Field className="FormField" name="birthdate">
+            <Form.Label className="FormLabel">Data de nascimento</Form.Label>
+
+            {errors.birthdate?.type === "required" && (
+              <Form.Message className="FormMessage">
+                Insira a data de nascimento
+              </Form.Message>
+            )}
+            <Form.Control asChild>
+              <input
+                className="Input"
+                type="date"
+                {...register("birthdate", {
+                  required: true,
+                })}
+              />
+            </Form.Control>
+          </Form.Field>
+
+          <Form.Field className="FormField" name="gender">
+            <Form.Label className="FormLabel">Sexo</Form.Label>
+
+            {errors.gender?.type === "required" && (
+              <Form.Message className="FormMessage">Selecione</Form.Message>
+            )}
+            <Form.Control asChild>
+              <select
+                className="Input"
+                id="gender"
+                {...register("gender", {
+                  required: true,
+                })}
+              >
+                <option value="">Selecione</option>
+                <option value="female">Feminino</option>
+                <option value="male">Masculino</option>
+                <option value="other">Outro</option>
+              </select>
+            </Form.Control>
+          </Form.Field>
+        </div>
+
+        <Form.Field className="FormField" name="companyRegistry">
+          <Form.Label className="FormLabel">CNPJ</Form.Label>
+
+          {errors.companyRegistry?.type === "required" && (
+            <Form.Message className="FormMessage">Informe o CNPJ</Form.Message>
+          )}
+          <Form.Control asChild>
             <input
               className="Input"
-              id="lastName"
               type="text"
-              {...register("lastName", {
+              {...register("companyRegistry", {
                 required: true,
-                maxLength: 20,
-                pattern: /^[A-Za-z]+$/i,
+                maxLength: 11,
+                pattern:
+                  /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/i,
               })}
-              aria-invalid={errors.lastName ? "true" : "false"}
             />
-            {errors.lastName?.type === "required" && (
-              <p role="alert">Informe o sobrenome</p>
-            )}
-          </fieldset>
-        </div>
+          </Form.Control>
+        </Form.Field>
 
-        <fieldset className="Fieldset">
-          <label className="Label" htmlFor=" ">
-            Data de nascimento
-          </label>
-          <input
-            className="Input"
-            id="birthdate"
-            type="date"
-            {...register("birthdate", {
-              required: true,
-            })}
-            aria-invalid={errors.birthdate ? "true" : "false"}
-          />
-          {errors.birthdate?.type === "required" && (
-            <p role="alert">Informe a data de nascimento</p>
-          )}
-        </fieldset>
-        <fieldset className="Fieldset">
-          <label className="Label" htmlFor="gender">
-            Gender Selection
-          </label>
-          <select className="Input" id="gender" {...register("gender")}>
-            <option value="female">Feminino</option>
-            <option value="male">Masculino</option>
-            <option value="other">Outro</option>
-          </select>
-        </fieldset>
-        <fieldset className="Fieldset">
-          <label className="Label" htmlFor=" ">
-            CNPJ
-          </label>
-          <input
-            className="Input"
-            id="companyRegistry"
-            type="text"
-            {...register("companyRegistry", {
-              required: true,
-              maxLength: 11,
-              pattern:
-                /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/i,
-            })}
-            aria-invalid={errors.companyRegistry ? "true" : "false"}
-          />
-          {errors.companyRegistry?.type === "required" && (
-            <p role="alert">Informe o nº do CNPJ</p>
-          )}
-        </fieldset>
-
-        <div
-          style={{
-            display: "flex",
-            marginTop: 20,
-            justifyContent: "flex-end",
-          }}
-        >
-          <button className="Button green" onClick={handleSubmit(createUser)}>
-            Enviar
+        <Form.Submit asChild>
+          <button
+            className="Button w-full rounded-[50px]"
+            onClick={handleSubmit(createUser)}
+          >
+            Registrar
           </button>
-        </div>
-      </form>
+        </Form.Submit>
+      </Form.Root>
     </Tabs.Content>
   );
 }

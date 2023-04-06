@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "@/styles/StyledRadix.css";
 @import "@/styles/layout.css";
 
 :root {
@@ -13,14 +14,20 @@
   --font-avenir: Avenir, Helvetica, Arial, sans-serif;
   --font-ubuntu: "Ubuntu", sans-serif;
 
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: #1b1b1b;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
   --primary-color: rgb(119, 0, 255);
+  --secondary-color: rgb(184, 79, 251);
   --primary-color-60: rgb(119, 0, 255, 0.6);
   --primary-color-30: rgb(119, 0, 255, 0.3);
   --primary-color-15: rgb(119, 0, 255, 0.15);
+
+  --tertiary-color: rgb(255, 4, 189);
+  --tertiary-color-60: rgba(255, 4, 149, 0.6);
+  --tertiary-color-30: rgba(255, 4, 149, 0.3);
+  --tertiary-color-15: rgba(255, 4, 149, 0.15);
 
   --positive-color: #afe3c0;
   --negative-color: #ff5462;
@@ -63,49 +70,6 @@
   --card-border-rgb: 131, 134, 135;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-color: rgb(119, 0, 255);
-    --primary-color-60: rgb(119, 0, 255, 0.6);
-    --primary-color-30: rgb(119, 0, 255, 0.3);
-    --primary-color-15: rgb(119, 0, 255, 0.15);
-
-    --positive-color: #18794e;
-    --negative-color: #d64550;
-    --warning-color: #c5a400;
-    --info-color: #67697c;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -115,13 +79,12 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
+      90deg,
       transparent,
       rgb(var(--background-end-rgb))
     )
@@ -142,14 +105,12 @@ a {
 }
 
 .title-gradient {
-  background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+  background: -webkit-linear-gradient(
+    315deg,
+    var(--tertiary-color) 25%,
+    var(--primary-color)
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
