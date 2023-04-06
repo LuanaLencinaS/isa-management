@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import { GenderEnum } from "@/utils/GenderEnum";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
+import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 interface AsideProps {
   onUserClick: (userSelected: IFormUserPatient) => void;
@@ -29,7 +30,12 @@ export default function SearchUser({ onUserClick }: AsideProps) {
 
   useEffect(() => {
     const getUsers = async () => {
-      const users = await findAll();
+      const response = await findAll();
+
+      const users: IFormUserPatient[] = response.map((user) => {
+        return UserPatientTransform.fromResponse(user);
+      });
+
       setUsers(users);
 
       console.log(users);
@@ -39,7 +45,7 @@ export default function SearchUser({ onUserClick }: AsideProps) {
   }, []);
 
   return (
-    <section className="ui-search-dash xl:w-72 w-72 flex-shrink-0 border-r border-gray-200 hidden h-full overflow-y-auto lg:block p-5">
+    <section className="ui-search-dash w-1/3 flex-shrink-0 border-r border-gray-200 hidden h-full overflow-y-auto lg:block p-5">
       <header className="bg-white space-y-4 p-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-primary-color">Pacientes</h2>
@@ -78,26 +84,29 @@ export default function SearchUser({ onUserClick }: AsideProps) {
 
             <div className="flex items-center w-full">
               <div className="text-xs py-1 px-2 leading-none bg-primary-color-15 text-primary-color rounded-md">
-                {user.birthdate}
+                Data de nascimento
               </div>
-              <div className="ml-auto text-xs text-gray-500">10/10/2000</div>
+              <div className="ml-auto text-xs text-gray-500">
+                {user.birthdate || "-"}
+              </div>
             </div>
             <div className="flex items-center w-full">
               <div className="text-xs py-1 px-2 leading-none  bg-primary-color-15 text-primary-color rounded-md">
-                {user.gender}
+                Nº Carteirinha
               </div>
-              <div className="ml-auto text-xs text-gray-500">123456789</div>
+              <div className="ml-auto text-xs text-gray-500">
+                {user.registeNumber || "-"}
+              </div>
+            </div>
+            <div className="flex items-center w-full">
+              <div className="text-xs py-1 px-2 leading-none  bg-primary-color-15 text-primary-color rounded-md">
+                Sexo
+              </div>
+              <div className="ml-auto text-xs text-gray-500">
+                {user.gender || "Sem informação"}
+              </div>
             </div>
           </button>
-        ))}
-      </ul>
-
-      <ul>
-        {users.map((user) => (
-          <li key={`post-${user.name}`}>
-            <h2>{user.name}</h2>
-            <p>{user.gender}</p>
-          </li>
         ))}
       </ul>
     </section>
