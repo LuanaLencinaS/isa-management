@@ -10,13 +10,26 @@ import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
 export default function Dashboard() {
   // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
-  const [userSelected, setUserSelected] = useState<IFormUserPatient | null>(
-    null
-  );
+  const [userSelected, setUserSelected] = useState<IFormUserPatient | null>({
+    userId: "",
+    name: "",
+    email: "",
+    password: "",
+    gender: GenderEnum.female,
+    birthdate: "",
+    registeNumber: "",
+    statusActive: false,
+    patientId: "",
+  });
 
   function openUserDetail(userSelected: IFormUserPatient) {
     console.log("clicou", userSelected);
     setUserSelected(userSelected);
+  }
+
+  function onSave(userSelected: IFormUserPatient) {
+    console.log("ON SAVE", userSelected);
+    // setUserSelected(userSelected);
   }
 
   return (
@@ -60,7 +73,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="ui-content-list sm:p-7 p-4">
-                  <Patient />
+                  <Patient defaultValues={userSelected} onSubmit={onSave} />
                 </div>
               </>
             ) : (

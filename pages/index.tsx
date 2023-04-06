@@ -12,17 +12,17 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 interface IFormRegister {
-  name: String;
+  name: string;
   gender: GenderEnum;
-  email: String;
-  password: String;
-  birthdate: String;
-  registerNumber: String;
+  email: string;
+  password: string;
+  birthdate: string;
+  registerNumber: string;
 }
 
 interface IFormLogin {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export default function Registro() {

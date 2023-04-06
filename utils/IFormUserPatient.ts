@@ -1,13 +1,13 @@
 import { GenderEnum } from "@/utils/GenderEnum";
 
 export interface IFormUserPatient {
-  userId: String;
-  name: String;
-  email: String;
-  password: String;
-  gender: GenderEnum;
-  birthdate: String;
-  registeNumber: String;
+  userId: string;
+  name: string;
+  email: string;
+  password: string;
+  gender: GenderEnum | string;
+  birthdate: string;
+  registeNumber: string;
   statusActive: Boolean;
-  patientId: String;
+  patientId: string;
 }

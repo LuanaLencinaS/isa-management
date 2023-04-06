@@ -1,19 +1,39 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Form from "@radix-ui/react-form";
 
+import { GenderEnum } from "@/utils/GenderEnum";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
+import { useEffect } from "react";
 
-export default function Patient() {
+interface IPatientFormProps {
+  defaultValues: IFormUserPatient;
+  onSubmit: (data: IFormUserPatient) => void;
+}
+
+export default function Patient({
+  defaultValues,
+  onSubmit,
+}: IPatientFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormUserPatient>();
+    setValue,
+  } = useForm<IFormUserPatient>({ defaultValues: defaultValues });
 
   const setUser: SubmitHandler<IFormUserPatient> = (data) => {
     console.log("DEU SUBMIT");
     console.log("data", data);
+    onSubmit(data);
   };
+
+  useEffect(() => {
+    setValue("name", defaultValues.name);
+    setValue("birthdate", defaultValues.birthdate);
+    setValue("gender", defaultValues.gender);
+    setValue("registeNumber", defaultValues.registeNumber);
+    setValue("email", defaultValues.email);
+  }, [defaultValues, setValue]);
 
   return (
     <Form.Root className="FormRoot grid grid-cols-1 gap-4">
@@ -32,6 +52,7 @@ export default function Patient() {
             {...register("name", {
               required: true,
             })}
+            onChange={(e) => setValue("name", e.target.value)}
           />
         </Form.Control>
       </Form.Field>
@@ -52,6 +73,7 @@ export default function Patient() {
               {...register("birthdate", {
                 required: true,
               })}
+              onChange={(e) => setValue("birthdate", e.target.value)}
             />
           </Form.Control>
         </Form.Field>
@@ -69,6 +91,7 @@ export default function Patient() {
               {...register("gender", {
                 required: true,
               })}
+              onChange={(e) => setValue("gender", e.target.value)}
             >
               <option value="">Selecione</option>
               <option value="F">Feminino</option>
@@ -94,9 +117,45 @@ export default function Patient() {
             {...register("registeNumber", {
               required: true,
             })}
+            onChange={(e) => setValue("registeNumber", e.target.value)}
           />
         </Form.Control>
       </Form.Field>
+
+      <Form.Field className="FormField" name="email">
+        <Form.Label className="FormLabel">E-mail</Form.Label>
+
+        {errors.email?.type === "required" && (
+          <Form.Message className="FormMessage">Informe o e-mail</Form.Message>
+        )}
+        <Form.Control asChild>
+          <input
+            className="Input"
+            type="email"
+            {...register("email", {
+              required: true,
+            })}
+            onChange={(e) => setValue("email", e.target.value)}
+          />
+        </Form.Control>
+      </Form.Field>
+
+      {/* <Form.Field className="FormField" name="password">
+        <Form.Label className="FormLabel">Senha</Form.Label>
+
+        {errors.password?.type === "required" && (
+          <Form.Message className="FormMessage">Insira a senha</Form.Message>
+        )}
+        <Form.Control asChild>
+          <input
+            className="Input"
+            type="password"
+            {...register("password", {
+              required: true,
+            })}
+          />
+        </Form.Control>
+      </Form.Field> */}
 
       <Form.Submit asChild>
         <button

@@ -7,8 +7,8 @@ interface AsideProps {
 }
 
 interface IFormLogin {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export default function SignIn({ onGoToClick }: AsideProps) {

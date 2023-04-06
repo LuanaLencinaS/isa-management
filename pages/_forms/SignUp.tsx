@@ -5,17 +5,17 @@ import * as Form from "@radix-ui/react-form";
 import { GenderEnum } from "@/utils/GenderEnum";
 
 interface IFormRegister {
-  name: String;
+  name: string;
   gender: GenderEnum;
-  email: String;
-  password: String;
-  birthdate: String;
-  companyRegistry: String;
+  email: string;
+  password: string;
+  birthdate: string;
+  companyRegistry: string;
 }
 
 interface IFormLogin {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export default function SignUp() {
