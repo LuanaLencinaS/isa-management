@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
 import * as Avatar from "@radix-ui/react-avatar";
 import Patient from "@/pages/_forms/Patient";
 import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import SearchUser from "@/components/SearchUser";
+
 import { useEffect, useState } from "react";
+import { useAuth } from "@/utils/middleware/useAuth";
 
 import { GenderEnum } from "@/utils/GenderEnum";
 import { update, deleteUser, retoreUser } from "@/api/service/PatientService";
@@ -12,7 +15,8 @@ import { IFormUserPatient } from "@/utils/IFormUserPatient";
 import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 export default function Dashboard() {
-  // const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
+  // const router = useRouter();
+
   const [userSelected, setUserSelected] = useState<IFormUserPatient>({
     userId: "",
     name: "",
@@ -24,11 +28,27 @@ export default function Dashboard() {
     statusActive: false,
     patientId: "",
   });
+
   const [listUsers, setUsers] = useState<IFormUserPatient[]>([]);
 
+  // const [userLogged, setUserLogged] = useState<{
+  //   token: string;
+  //   name: string;
+  // }>({ token: "", name: "" });
+
   useEffect(() => {
+    // if (typeof window !== "undefined") {
+    //   setUserLogged({
+    //     token: localStorage.getItem("token_authorizarion") ?? "",
+    //     name: localStorage.getItem("user_name") ?? "",
+    //   });
+    // }
+
     getUsers().then((users) => setUsers(users));
   }, []);
+
+  const { token, name } = useAuth();
+  if (!token) return null;
 
   async function getUsers(): Promise<IFormUserPatient[]> {
     const response = await findAll();
@@ -91,7 +111,7 @@ export default function Dashboard() {
       <Aside />
 
       <div className="flex-grow overflow-hidden h-full flex flex-col gap-5">
-        <Header />
+        <Header userName={name || "-"} />
 
         <div className="ui-dash-content flex-grow flex overflow-x-hidden gap-5">
           <SearchUser onUserClick={openUserDetail} listUsers={listUsers} />

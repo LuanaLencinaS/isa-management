@@ -1,6 +1,10 @@
 import * as Avatar from "@radix-ui/react-avatar";
 
-export default function Header() {
+interface HeaderProps {
+  userName: string;
+}
+
+export default function Header({ userName }: HeaderProps) {
   return (
     <section className="ui-header-dash lg:flex w-full border-b border-gray-200 hidden px-10 py-4">
       <div className="ml-auto flex items-center space-x-7">
@@ -14,7 +18,7 @@ export default function Header() {
             </Avatar.Root>
             <span className="absolute right-0 -mb-0.5 bottom-0 w-2 h-2 rounded-full bg-green-500 border border-white "></span>
           </span>
-          <span className="ml-2">Usuário Logado</span>
+          <span className="ml-2">{userName}</span>
         </button>
       </div>
     </section>

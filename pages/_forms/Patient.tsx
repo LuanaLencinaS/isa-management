@@ -22,8 +22,6 @@ export default function Patient({
   } = useForm<IFormUserPatient>({ defaultValues: defaultValues });
 
   const setUser: SubmitHandler<IFormUserPatient> = (data) => {
-    console.log("DEU SUBMIT");
-    console.log("data", data);
     onSubmit(data);
   };
 

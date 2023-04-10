@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as Tabs from "@radix-ui/react-tabs";
 import * as Form from "@radix-ui/react-form";
 import { login } from "@/api/service/LoginService";
+import { AccessTypeEnum } from "@/utils/AccessTypeEnum";
 
 interface AsideProps {
   onGoToClick: (path: string) => void;
@@ -23,8 +24,30 @@ export default function SignIn({ onGoToClick }: AsideProps) {
     const response = await login(data.email, data.password);
 
     if (response.status == 0) return alert("Login invalido");
-    localStorage.setItem("token_authorizarion", response.data.token);
+
+    localStorage.setItem("token_authorizarion", response?.data?.token);
+    localStorage.setItem("user_id", response?.data?.user?.id);
+    localStorage.setItem("user_name", response?.data?.user?.name);
+    localStorage.setItem("user_email", response?.data?.user?.email);
+    localStorage.setItem(
+      "user_type_access",
+      setTypeAccess(response?.data?.user?.type_user)
+    );
+
     onGoToClick("dashboard");
+  };
+
+  const setTypeAccess = (typeUser: number) => {
+    switch (typeUser) {
+      case AccessTypeEnum.manager:
+        return "manager";
+
+      case AccessTypeEnum.nurse:
+        return "nurse";
+
+      default:
+        return "patient";
+    }
   };
 
   return (

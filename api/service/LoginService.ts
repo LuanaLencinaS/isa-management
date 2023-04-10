@@ -1,6 +1,5 @@
-import { get, post, put } from "@/api/Request";
+import { post } from "@/api/Request";
 import { AxiosResponse } from "axios";
-//import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 

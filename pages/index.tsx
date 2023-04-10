@@ -1,3 +1,6 @@
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
@@ -7,8 +10,8 @@ import * as Tabs from "@radix-ui/react-tabs";
 import SignIn from "@/pages/_forms/SignIn";
 import SignUp from "@/pages/_forms/SignUp";
 import { GenderEnum } from "@/utils/GenderEnum";
+import { useAuth } from "@/utils/middleware/useAuth";
 
-import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 interface IFormRegister {
@@ -37,6 +40,8 @@ export default function Registro() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormRegister>();
+
+  useAuth();
 
   const createUser: SubmitHandler<IFormRegister> = (data) => {
     console.log("DEU SUBMIT");
