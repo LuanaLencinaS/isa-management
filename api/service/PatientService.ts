@@ -1,4 +1,4 @@
-import { get, put } from "@/api/Request";
+import { get, post, put } from "@/api/Request";
 import { AxiosResponse } from "axios";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
 
@@ -22,6 +22,16 @@ export async function update(
 ): Promise<IFormUserPatient> {
   const response = await put<AxiosResponse<any>>(
     `${API_ENDPOINT}/patient/${id}`,
+    user
+  );
+  return response.data.data as IFormUserPatient;
+}
+
+export async function create(
+  user: IFormUserPatient
+): Promise<IFormUserPatient> {
+  const response = await post<AxiosResponse<any>>(
+    `${API_ENDPOINT}/patient`,
     user
   );
   return response.data.data as IFormUserPatient;

@@ -10,6 +10,7 @@ import { UserPatientTransform } from "@/utils/UserPatientTransform";
 
 interface AsideProps {
   onUserClick: (userSelected: IFormUserPatient) => void;
+  onUserCreate: (userSelected: IFormUserPatient, isCreate: boolean) => void;
   listUsers: IFormUserPatient[];
 }
 
@@ -25,7 +26,11 @@ const userSelected: IFormUserPatient = {
   registerNumber: "123456",
 };
 
-export default function SearchUser({ onUserClick, listUsers }: AsideProps) {
+export default function SearchUser({
+  onUserClick,
+  onUserCreate,
+  listUsers,
+}: AsideProps) {
   const [users, setUsers] = useState<IFormUserPatient[]>(listUsers);
 
   useEffect(() => {
@@ -37,7 +42,25 @@ export default function SearchUser({ onUserClick, listUsers }: AsideProps) {
       <header className="bg-white space-y-4 p-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-primary-color">Pacientes</h2>
-          <button className="Button rounded-[20px] py-2 px-4">
+          <button
+            className="Button rounded-[20px] py-2 px-4"
+            onClick={() =>
+              onUserCreate(
+                {
+                  userId: "",
+                  name: "",
+                  email: "",
+                  password: "",
+                  gender: GenderEnum.female,
+                  birthdate: "",
+                  registerNumber: "",
+                  statusActive: false,
+                  patientId: "",
+                },
+                true
+              )
+            }
+          >
             <Plus />
             Adicionar
           </button>

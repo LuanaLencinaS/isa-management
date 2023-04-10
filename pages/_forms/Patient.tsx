@@ -26,6 +26,7 @@ export default function Patient({
   };
 
   useEffect(() => {
+    setValue("userId", defaultValues.userId);
     setValue("name", defaultValues.name);
     setValue("birthdate", defaultValues.birthdate);
     setValue("gender", defaultValues.gender);

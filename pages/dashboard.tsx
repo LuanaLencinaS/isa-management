@@ -9,7 +9,12 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/utils/middleware/useAuth";
 
 import { GenderEnum } from "@/utils/GenderEnum";
-import { update, deleteUser, retoreUser } from "@/api/service/PatientService";
+import {
+  update,
+  deleteUser,
+  retoreUser,
+  create,
+} from "@/api/service/PatientService";
 import { findAll } from "@/api/service/PatientService";
 import { IFormUserPatient } from "@/utils/IFormUserPatient";
 import { UserPatientTransform } from "@/utils/UserPatientTransform";
@@ -30,20 +35,9 @@ export default function Dashboard() {
   });
 
   const [listUsers, setUsers] = useState<IFormUserPatient[]>([]);
-
-  // const [userLogged, setUserLogged] = useState<{
-  //   token: string;
-  //   name: string;
-  // }>({ token: "", name: "" });
+  const [isCreate, setIsCreate] = useState<boolean>(false);
 
   useEffect(() => {
-    // if (typeof window !== "undefined") {
-    //   setUserLogged({
-    //     token: localStorage.getItem("token_authorizarion") ?? "",
-    //     name: localStorage.getItem("user_name") ?? "",
-    //   });
-    // }
-
     getUsers().then((users) => setUsers(users));
   }, []);
 
@@ -58,17 +52,25 @@ export default function Dashboard() {
     });
   }
 
-  function openUserDetail(userSelected: IFormUserPatient) {
+  function openUserDetail(userSelected: IFormUserPatient, isCreate = false) {
     setUserSelected(userSelected);
+    setIsCreate(isCreate);
   }
 
   async function onSave(userSelected: IFormUserPatient) {
     const userTransform = UserPatientTransform.toRequest(userSelected);
 
     try {
-      await update(userSelected.userId, userTransform);
+      if (userSelected.userId) {
+        await update(userSelected.userId, userTransform);
+        alert("Paciente atualizado!");
+      } else {
+        await create(userTransform);
+        setIsCreate(false);
+        alert("Paciente adicionado!");
+      }
+
       setUserSelected(userSelected);
-      alert("Paciente atualizado!");
 
       getUsers().then((users) => setUsers(users));
     } catch (error: any) {
@@ -114,10 +116,14 @@ export default function Dashboard() {
         <Header userName={name || "-"} />
 
         <div className="ui-dash-content flex-grow flex overflow-x-hidden gap-5">
-          <SearchUser onUserClick={openUserDetail} listUsers={listUsers} />
+          <SearchUser
+            onUserCreate={openUserDetail}
+            onUserClick={openUserDetail}
+            listUsers={listUsers}
+          />
 
           <div className="ui-list-dash flex-grow bg-white  overflow-y-auto">
-            {userSelected?.userId ? (
+            {userSelected?.userId || isCreate ? (
               <>
                 <div className="ui-head-list p-4 flex flex-col w-full border-b border-gray-200 sticky top-0 backdrop-blur-sm bg-white/30">
                   <div className="flex w-full items-center">
@@ -131,33 +137,37 @@ export default function Dashboard() {
                       {userSelected && <p>{userSelected.name}</p>}
                     </div>
                     <div className="ml-auto sm:flex hidden items-center justify-end">
-                      <div className="text-right">
-                        {userSelected?.statusActive ? (
-                          <button
-                            className="Button negative rounded-[20px] py-2 px-4"
-                            onClick={() =>
-                              handleStateUser(
-                                userSelected?.statusActive,
-                                userSelected?.userId
-                              )
-                            }
-                          >
-                            Desativar
-                          </button>
-                        ) : (
-                          <button
-                            className="Button positive rounded-[20px] py-2 px-4"
-                            onClick={() =>
-                              handleStateUser(
-                                userSelected?.statusActive,
-                                userSelected?.userId
-                              )
-                            }
-                          >
-                            Reativar
-                          </button>
-                        )}
-                      </div>
+                      {!isCreate ? (
+                        <div className="text-right">
+                          {userSelected?.statusActive ? (
+                            <button
+                              className="Button negative rounded-[20px] py-2 px-4"
+                              onClick={() =>
+                                handleStateUser(
+                                  userSelected?.statusActive,
+                                  userSelected?.userId
+                                )
+                              }
+                            >
+                              Desativar
+                            </button>
+                          ) : (
+                            <button
+                              className="Button positive rounded-[20px] py-2 px-4"
+                              onClick={() =>
+                                handleStateUser(
+                                  userSelected?.statusActive,
+                                  userSelected?.userId
+                                )
+                              }
+                            >
+                              Reativar
+                            </button>
+                          )}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
                 </div>
